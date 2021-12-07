@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="container">
       <Head>
-        <title>Create Next App</title>
+        <title>Say Hello to the Server</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -13,7 +13,7 @@ export default function Home() {
         <h1 className="title">
           Hi! This is the frontend in
           {' '}
-          <a href="https://poc.datariah.com">poc.datariah.com</a>
+          <a href="http://poc.datariah.com">poc.datariah.com</a>
           !
         </h1>
 
