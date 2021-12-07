@@ -1,32 +1,36 @@
-import Head from 'next/head'
+import Head from 'next/head';
 import ApiResponse from '../src/components/ApiResponse';
 
 export default function Home() {
-    return (
+  return (
+    <div className="container">
+      <Head>
+        <title>Create Next App</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <main>
+        <h1 className="title">
+          Hi! This is the frontend in
+          {' '}
+          <a href="https://poc.datariah.com">poc.datariah.com</a>
+          !
+        </h1>
+
         <div className="container">
-            <Head>
-                <title>Create Next App</title>
-                <link rel="icon" href="/favicon.ico"/>
-            </Head>
+          <p>Let's talk to the API in api.poc.datariah.com</p>
 
-            <main>
-                <h1 className="title">
-                    Hi! This is the frontend in <a href="https://poc.datariah.com">poc.datariah.com</a>!
-                </h1>
+          <ApiResponse />
+        </div>
 
-                <div className="container">
-                    <p>Let's talk to the API in api.poc.datariah.com</p>
+      </main>
 
-                   <ApiResponse/>
-                </div>
+      <footer>
+        Powered by Next.js
+      </footer>
 
-            </main>
-
-            <footer>
-                Powered by Next.js
-            </footer>
-
-            <style jsx>{`
+      <style jsx>
+        {`
         .container {
           min-height: 100vh;
           padding: 0 0.5rem;
@@ -111,9 +115,11 @@ export default function Home() {
             flex-direction: column;
           }
         }
-      `}</style>
+      `}
+      </style>
 
-            <style jsx global>{`
+      <style jsx global>
+        {`
         html,
         body {
           padding: 0;
@@ -126,7 +132,8 @@ export default function Home() {
         * {
           box-sizing: border-box;
         }
-      `}</style>
-        </div>
-    )
+      `}
+      </style>
+    </div>
+  );
 }

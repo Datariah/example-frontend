@@ -1,0 +1,56 @@
+---
+name: 'PR Checks'
+on:
+  - pull_request
+permissions:
+  pull-requests: read
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/fermium'
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm run test
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/fermium'
+      - name: Install deps
+        run: npm install
+      - name: Build static assets
+        run: npm run build
+      - name: Persist assets as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: frontend-static
+          path: out/
+    needs:
+      - test
+  deploy:
+    name: Deploy to Object Storage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download a single artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: frontend-static
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Sync to S3
+        run: aws s3 sync . s3://poc.datariah.com/ --delete --acl public-read
+    needs:
+      - build
+
